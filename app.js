@@ -1,6 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
-const MAXTURN = 26
-
+const MAX_TURN = 26
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -34,15 +33,19 @@ const init = () => {
     })
 
 }
+
+
 const randomNumGenerator = () => {
 
     return ((Math.floor(Math.random() * 6)) + 1)
 }
 const rollDice = () => {
     for (let i = 0; i < currentDice.length; i++) {
+
         currentDice[i] = randomNumGenerator()
     }
 
+    render()
     console.log(currentDice)
 }
 const handleDiceClick = (event) => {
@@ -61,6 +64,15 @@ const handleDiceClick = (event) => {
 
 }
 
+
+const assignDice = () => {
+    dieEls.forEach((die) => {
+        die.innerText = currentDice[die.id - 1]
+    })
+}
+const render = () => {
+    assignDice()
+}
 
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
