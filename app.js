@@ -125,19 +125,27 @@ const lockedDiceSort = () => {
     return lockedDice.sort()
 }
 
-const checkforYahtzee = () => {
+const checkForYahtzee = () => {
     const yahtzee = currentDice.every((elem) => {
 
         return elem === currentDice[0]
     })
-    console.log(yahtzee)
+
     return yahtzee
+}
+const checkForChance = () => {
+    const sumOfAllDice = currentDice.reduce((acc, n, i) => {
+        return acc + n
+    }, 0)
+
+    return sumOfAllDice
 }
 
 const render = () => {
     assignDice()
     lockedDiceSort()
-    checkforYahtzee()
+    checkForYahtzee()
+    checkForChance()
 }
 console.log(lockedDiceSort(lockedDice))
 /*----------------------------- Event Listeners -----------------------------*/
