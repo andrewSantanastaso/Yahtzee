@@ -1,0 +1,47 @@
+.face-1.unlocked {
+  background-image: url("images/dice-six-faces-one.svg");
+}
+.face-1.locked {
+  background-image: url("images/dice-six-faces-one.svg");
+  filter: brightness(50%);
+}
+
+.face-2.unlocked {
+  background-image: url("images/dice-six-faces-two.svg");
+}
+.face-2.locked {
+  background-image: url("images/dice-six-faces-two.svg");
+  filter: brightness(50%);
+}
+
+.face-3.unlocked {
+  background-image: url("images/dice-six-faces-three.svg");
+}
+.face-3.locked {
+  background-image: url("images/dice-six-faces-three.svg");
+  filter: brightness(50%);
+}
+
+.face-4.unlocked {
+  background-image: url("images/dice-six-faces-four.svg");
+}
+.face-4.locked {
+  background-image: url("images/dice-six-faces-four.svg");
+  filter: brightness(50%);
+}
+
+.face-5.unlocked {
+  background-image: url("images/dice-six-faces-five.svg");
+}
+.face-5.locked {
+  background-image: url("images/dice-six-faces-five.svg");
+  filter: brightness(50%);
+}
+
+.face-6.unlocked {
+  background-image: url("images/dice-six-faces-six.svg");
+}
+.face-6.locked {
+  background-image: url("images/dice-six-faces-six.svg");
+  filter: brightness(50%);
+}
