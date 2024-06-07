@@ -49,6 +49,9 @@ const rollDice = () => {
     console.log(currentDice)
 }
 const handleDiceClick = (event) => {
+    if (event.target.classList.contains('dice')) {
+        return
+    }
     if (dieUnlocked) {
 
         event.target.classList.add('locked')
