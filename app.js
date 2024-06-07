@@ -11,6 +11,7 @@ let currentDice = []
 let lockedDice = []
 let player1Turn = false
 let player2Turn = false
+let dieUnlocked = false
 
 /*------------------------ Cached Element References ------------------------*/
 const scoreCardEl = document.querySelector('.score-card')
@@ -45,16 +46,22 @@ const rollDice = () => {
     console.log(currentDice)
 }
 const handleDiceClick = (event) => {
-    if (event.target.classList.contains('unlocked')) {
+    if (dieUnlocked) {
+
         event.target.classList.add('locked')
         event.target.classList.remove('unlocked')
+        dieUnlocked = false
     }
     else {
         event.target.classList.add('unlocked')
         event.target.classList.remove('locked')
+        dieUnlocked = true
     }
 
+
 }
+
+
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)
