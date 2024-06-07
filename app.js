@@ -3,6 +3,7 @@ const MAX_TURN = 26
 const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
 
 
+
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score
 let player2Score
@@ -11,8 +12,8 @@ let currentDice = []
 let lockedDice = []
 let player1Turn = false
 let player2Turn = false
-let dieUnlocked = false
-
+let dieUnlocked = true
+let rollNumber = 1
 /*------------------------ Cached Element References ------------------------*/
 const scoreCardEl = document.querySelector('.score-card')
 const player1ScoreEl = document.querySelector('player1-score')
@@ -41,15 +42,27 @@ const randomNumGenerator = () => {
     return ((Math.floor(Math.random() * 6)) + 1)
 }
 const rollDice = () => {
-    for (let i = 0; i < currentDice.length; i++) {
-
-        currentDice[i] = randomNumGenerator()
+    if (rollNumber > 3) {
+        lockedDice = currentDice
+        console.log(lockedDiceSort())
+        return
     }
+    for (let i = 0; i < currentDice.length; i++) {
+        if (diceArray[i].classList.contains('unlocked')) {
 
+            currentDice[i] = randomNumGenerator()
+        }
+
+        else {
+            currentDice[i] = currentDice[i]
+        }
+    }
+    rollNumber++
     render()
-    console.log(currentDice)
+
 }
 const handleDiceClick = (event) => {
+
     if (event.target.classList.contains('dice')) {
         return
     }
@@ -62,9 +75,9 @@ const handleDiceClick = (event) => {
     else {
         event.target.classList.add('unlocked')
         event.target.classList.remove('locked')
+        lockedDice.push(currentDice[event.target.id - 1])
         dieUnlocked = true
     }
-
 
 }
 
@@ -72,17 +85,27 @@ const handleDiceClick = (event) => {
 const assignDice = () => {
 
     dieEls.forEach((die) => {
-        console.log(die.classList)
-        die.classList.remove(die.classList[2])
+
+        if (die.classList.contains('unlocked')) {
+            die.classList.remove(die.classList[2])
+        }
+
+
         die.classList.add(`face-${currentDice[die.id - 1]}`)
-        console.log(die.classList)
+
 
     })
 }
-const render = () => {
-    assignDice()
+const lockedDiceSort = () => {
+    return lockedDice.sort()
 }
 
+
+const render = () => {
+    assignDice()
+    lockedDiceSort()
+}
+console.log(lockedDiceSort(lockedDice))
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)
