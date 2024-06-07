@@ -1,5 +1,6 @@
 /*-------------------------------- Constants --------------------------------*/
 const MAX_TURN = 26
+const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -69,8 +70,13 @@ const handleDiceClick = (event) => {
 
 
 const assignDice = () => {
+
     dieEls.forEach((die) => {
-        die.innerText = currentDice[die.id - 1]
+        console.log(die.classList)
+        die.classList.remove(die.classList[2])
+        die.classList.add(`face-${currentDice[die.id - 1]}`)
+        console.log(die.classList)
+
     })
 }
 const render = () => {
