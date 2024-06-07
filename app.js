@@ -1,33 +1,7 @@
 /*-------------------------------- Constants --------------------------------*/
 const MAX_TURN = 26
 const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
-
-// const convertArrays = (arr, test) => {
-//     let arrReduce = arr.reduce((acc, key) => {
-//         if (acc[key]) {
-//             acc[key]++
-//         }
-//         else {
-//             acc[key] = 1
-//         }
-//         return acc
-//     }, {})
-//     let testReduce = test.reduce((acc, key) => {
-//         if (acc[key]) {
-//             acc[key]++
-//         }
-//         else {
-//             acc[key] = 1
-//         }
-//         return acc
-//     }, {})
-//     return [testReduce, arrReduce]
-// }
-// const compareArrays = (sample,test) =>{
-//     for (let i = 0; i<sample.length ;i++){
-
-//     }
-// }
+const largeStraight = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
 
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score
@@ -35,6 +9,7 @@ let player2Score
 let turnNumber
 let currentDice = []
 let lockedDice = []
+let orderedArray = []
 let player1Turn = false
 let player2Turn = false
 let dieUnlocked = true
@@ -82,10 +57,13 @@ const rollDice = () => {
             currentDice[i] = currentDice[i]
         }
     }
-    // rollNumber++
+    orderedArray = currentDice.toSorted()
     render()
+    console.log(currentDice)
+    console.log(orderedArray)
 
 }
+
 const handleDiceClick = (event) => {
 
     if (event.target.classList.contains('dice')) {
@@ -140,14 +118,23 @@ const checkForChance = () => {
 
     return sumOfAllDice
 }
+const checkForLargeStraight = () => {
+    if (orderedArray.toString() === largeStraight.toString() || orderedArray.toString() === largeStraight[1].toString()
+    ) {
+        return true
+    } else {
+        return false
+    }
 
+}
 const render = () => {
     assignDice()
     lockedDiceSort()
     checkForYahtzee()
     checkForChance()
+    checkForLargeStraight()
 }
-console.log(lockedDiceSort(lockedDice))
+
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)

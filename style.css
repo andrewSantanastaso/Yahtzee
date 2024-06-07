@@ -53,7 +53,7 @@ h3 {
   border: 1px solid red;
   width: 500px;
   height: 280px;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   gap: 60px;
   flex-wrap: wrap;
