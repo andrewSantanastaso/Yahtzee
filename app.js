@@ -2,6 +2,7 @@
 const MAXTURN = 26
 
 
+
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score
 let player2Score
@@ -17,6 +18,7 @@ const player1ScoreEl = document.querySelector('player1-score')
 const player2ScoreEl = document.querySelector('player2-score')
 const scoreBoxEls = document.querySelectorAll('.score-box')
 const dieEls = document.querySelectorAll('.die')
+const diceEls = document.querySelector('.dice')
 const btnEL = document.querySelector('button')
 
 
@@ -26,6 +28,9 @@ const init = () => {
     player2Score = 0
     turnNumber = 1
     currentDice = Array(5).fill('')
+    dieEls.forEach((die) => {
+        die.classList.add('unlocked')
+    })
 
 }
 const randomNumGenerator = () => {
@@ -39,9 +44,21 @@ const rollDice = () => {
 
     console.log(currentDice)
 }
+const handleDiceClick = (event) => {
+    if (event.target.classList.contains('unlocked')) {
+        event.target.classList.add('locked')
+        event.target.classList.remove('unlocked')
+    }
+    else {
+        event.target.classList.add('unlocked')
+        event.target.classList.remove('locked')
+    }
+
+}
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)
+diceEls.addEventListener('click', handleDiceClick)
 
 
 
