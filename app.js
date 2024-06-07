@@ -2,7 +2,32 @@
 const MAX_TURN = 26
 const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
 
+// const convertArrays = (arr, test) => {
+//     let arrReduce = arr.reduce((acc, key) => {
+//         if (acc[key]) {
+//             acc[key]++
+//         }
+//         else {
+//             acc[key] = 1
+//         }
+//         return acc
+//     }, {})
+//     let testReduce = test.reduce((acc, key) => {
+//         if (acc[key]) {
+//             acc[key]++
+//         }
+//         else {
+//             acc[key] = 1
+//         }
+//         return acc
+//     }, {})
+//     return [testReduce, arrReduce]
+// }
+// const compareArrays = (sample,test) =>{
+//     for (let i = 0; i<sample.length ;i++){
 
+//     }
+// }
 
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score
@@ -57,7 +82,7 @@ const rollDice = () => {
             currentDice[i] = currentDice[i]
         }
     }
-    rollNumber++
+    // rollNumber++
     render()
 
 }
@@ -100,10 +125,19 @@ const lockedDiceSort = () => {
     return lockedDice.sort()
 }
 
+const checkforYahtzee = () => {
+    const yahtzee = currentDice.every((elem) => {
+
+        return elem === currentDice[0]
+    })
+    console.log(yahtzee)
+    return yahtzee
+}
 
 const render = () => {
     assignDice()
     lockedDiceSort()
+    checkforYahtzee()
 }
 console.log(lockedDiceSort(lockedDice))
 /*----------------------------- Event Listeners -----------------------------*/
