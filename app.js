@@ -37,7 +37,7 @@ const init = () => {
 
 }
 
-
+// --------- DICE LOGIC -----------//
 const randomNumGenerator = () => {
 
     return ((Math.floor(Math.random() * 6)) + 1)
@@ -176,6 +176,7 @@ const checkForBasics = (n) => {
     console.log(output)
     return output
 }
+//-------SCORING LOGIC--------//
 const render = () => {
     assignDice()
     lockedDiceSort()
