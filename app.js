@@ -116,7 +116,6 @@ const checkForYahtzee = () => {
     return yahtzee
 }
 const checkForChance = () => {
-    console.log(sumOfAllDice())
     sumOfAllDice()
 
 
@@ -162,8 +161,20 @@ const checkFor4Kind = () => {
 }
 const checkFor3Kind = () => {
     if (orderedArray[0] === orderedArray[2] || orderedArray[1] === orderedArray[3] || orderedArray[2] === orderedArray[4]) {
+
         return true
     }
+}
+const checkForBasics = (n) => {
+    let output = 0
+    for (let x of currentDice) {
+        if (x === n) {
+            output += x
+        }
+
+    }
+    console.log(output)
+    return output
 }
 const render = () => {
     assignDice()
@@ -174,6 +185,8 @@ const render = () => {
     checkForSmallStraight()
     checkForFullHouse()
     checkFor4Kind()
+    checkFor3Kind()
+    // checkForBasics()
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
