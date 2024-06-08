@@ -103,6 +103,9 @@ const assignDice = () => {
 const lockedDiceSort = () => {
     return lockedDice.sort()
 }
+const sumOfAllDice = () => (currentDice.reduce((acc, n, i) => {
+    return acc + n
+}, 0))
 
 const checkForYahtzee = () => {
     const yahtzee = currentDice.every((elem) => {
@@ -113,11 +116,10 @@ const checkForYahtzee = () => {
     return yahtzee
 }
 const checkForChance = () => {
-    const sumOfAllDice = currentDice.reduce((acc, n, i) => {
-        return acc + n
-    }, 0)
+    console.log(sumOfAllDice())
+    sumOfAllDice()
 
-    return sumOfAllDice
+
 }
 const checkForLargeStraight = () => {
     if (orderedArray.toString() === largeStraight.toString() || orderedArray.toString() === largeStraight[1].toString()
@@ -158,7 +160,11 @@ const checkFor4Kind = () => {
         return true
     }
 }
-con
+const checkFor3Kind = () => {
+    if (orderedArray[0] === orderedArray[2] || orderedArray[1] === orderedArray[3] || orderedArray[2] === orderedArray[4]) {
+        return true
+    }
+}
 const render = () => {
     assignDice()
     lockedDiceSort()
