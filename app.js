@@ -141,6 +141,22 @@ const checkForSmallStraight = () => {
     }
 
 }
+checkForFullHouse = () => {
+    if ((orderedArray[0] === orderedArray[1] && orderedArray[0] === orderedArray[2]) && (orderedArray[3] === orderedArray[4])) {
+
+        return true
+    }
+    if ((orderedArray[2] === orderedArray[3] && orderedArray[2] === orderedArray[4]) && (orderedArray[0] === orderedArray[1])) {
+
+        return true
+    }
+
+}
+// const checkFor4Kind = () => {
+//     if (orderedArray[0]===orderedArray[3]||orderedArray[1]===orderedArray[4]){
+//         return true
+//     }
+// }
 const render = () => {
     assignDice()
     lockedDiceSort()
@@ -148,6 +164,7 @@ const render = () => {
     checkForChance()
     checkForLargeStraight()
     checkForSmallStraight()
+    checkForFullHouse()
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
