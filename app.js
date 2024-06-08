@@ -152,11 +152,13 @@ checkForFullHouse = () => {
     }
 
 }
-// const checkFor4Kind = () => {
-//     if (orderedArray[0]===orderedArray[3]||orderedArray[1]===orderedArray[4]){
-//         return true
-//     }
-// }
+const checkFor4Kind = () => {
+    if (orderedArray[0] === orderedArray[3] || orderedArray[1] === orderedArray[4]) {
+
+        return true
+    }
+}
+con
 const render = () => {
     assignDice()
     lockedDiceSort()
@@ -165,6 +167,7 @@ const render = () => {
     checkForLargeStraight()
     checkForSmallStraight()
     checkForFullHouse()
+    checkFor4Kind()
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
