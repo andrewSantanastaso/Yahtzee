@@ -2,6 +2,7 @@
 const MAX_TURN = 26
 const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
 const largeStraight = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
+const smallStraight = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
 
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score
@@ -127,12 +128,26 @@ const checkForLargeStraight = () => {
     }
 
 }
+const checkForSmallStraight = () => {
+    let orderedString = orderedArray.toString()
+    let smallStraightA = smallStraight[0].toString()
+    let smallStraightB = smallStraight[1].toString()
+    let smallStraightC = smallStraight[2].toString()
+    if (orderedString.includes(smallStraightA) || orderedString.includes(smallStraightB) || orderedString.includes(smallStraightC)) {
+        return true
+    }
+    else {
+        return false
+    }
+
+}
 const render = () => {
     assignDice()
     lockedDiceSort()
     checkForYahtzee()
     checkForChance()
     checkForLargeStraight()
+    checkForSmallStraight()
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
