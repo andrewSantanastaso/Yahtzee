@@ -3,10 +3,10 @@ const MAX_TURN = 26
 const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
 const largeStraight = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
 const smallStraight = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
-
+const empty = '\u00A0'
 /*---------------------------- Variables (state) ----------------------------*/
-let player1Score
-let player2Score
+let player1Score = []
+let player2Score = []
 let turnNumber
 let currentDice = []
 let lockedDice = []
@@ -14,11 +14,16 @@ let orderedArray = []
 let player1Turn = false
 let player2Turn = false
 let dieUnlocked = true
-let rollNumber = 1
+let rollNumber = 0
+let currentPlayer
+
 /*------------------------ Cached Element References ------------------------*/
+const currentPlayerEl = document.querySelector('.current-player')
 const scoreCardEl = document.querySelector('.score-card')
-const player1ScoreEl = document.querySelector('player1-score')
-const player2ScoreEl = document.querySelector('player2-score')
+const player1ScoreEl = document.querySelector('.player1-score')
+const player2ScoreEl = document.querySelector('.player2-score')
+const player1TotalEl = document.querySelector('player1-total')
+const player2TotalEl = document.querySelector('player2-total')
 const scoreBoxEls = document.querySelectorAll('.score-box')
 const dieEls = document.querySelectorAll('.die')
 const diceEls = document.querySelector('.dice')
@@ -27,13 +32,35 @@ const btnEL = document.querySelector('button')
 
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
-    player1Score = 0
-    player2Score = 0
+    player1Score = []
+    player2Score = []
     turnNumber = 1
     currentDice = Array(5).fill('')
     dieEls.forEach((die) => {
         die.classList.add('unlocked')
     })
+    scoreBoxEls.forEach((scorebox) => {
+        scorebox.innerText = empty
+    })
+    player1Turn = true
+    render()
+
+}
+const checkCurrentPlayer = () => {
+    if (turnNumber % 2 === 0) {
+        player2Turn = true
+        player1Turn = false
+    }
+    else {
+        player1Turn = true
+        player2Turn = false
+    }
+}
+const displayCurrentPlayer = () => {
+    if (player1Turn) {
+        currentPlayerEl.innerText = 'Player 1\'s turn'
+    }
+    else { currentPlayerEl.innerText = 'Player 2\'s turn' }
 
 }
 
@@ -112,7 +139,6 @@ const checkForYahtzee = () => {
 
         return elem === currentDice[0]
     })
-
     return yahtzee
 }
 const checkForChance = () => {
@@ -177,7 +203,155 @@ const checkForBasics = (n) => {
     return output
 }
 //-------SCORING LOGIC--------//
+
+const handlePlayerScoreClick = (event) => {
+    let player
+    let scoreArray
+    const scoreBoxName = event.target.id
+
+    if (player1Turn) {
+        player = player1ScoreEl
+        scoreArray = player1Score
+    }
+    else {
+        player = player2ScoreEl
+        scoreArray = player2Score
+    }
+
+    if (event.target.parentNode === player && rollNumber > 0) {
+
+
+        if (event.target.innerText !== empty) {
+
+            return
+        }
+
+        switch (scoreBoxName) {
+            case 'chance':
+
+                event.target.innerText = sumOfAllDice()
+                scoreArray.push(sumOfAllDice())
+                turnNumber++
+                break;
+            case 'yahtzee':
+                if (checkForYahtzee()) {
+                    event.target.innerText = '50'
+                    scoreArray.push(50)
+                    turnNumber++
+                }
+                else {
+                    event.target.innerText = '0'
+                    scoreArray.push(0)
+                    turnNumber++
+                }
+                break;
+            case 'larger-straight':
+                if (checkForLargeStraight()) {
+                    event.target.innerText = '40'
+                    scoreArray.push(40)
+                    turnNumber++
+                }
+                else {
+                    event.target.innerText = '0'
+                    scoreArray.push(0)
+                    turnNumber++
+                }
+                break;
+            case 'small-straight':
+                if (checkForSmallStraight) {
+                    event.target.innerText = '30'
+                    scoreArray.push(30)
+                    turnNumber++
+                }
+                else {
+                    event.target.innerText = '0'
+                    scoreArray.push(0)
+                    turnNumber++
+                }
+                break;
+            case 'full-house':
+                if (checkForFullHouse) {
+                    event.target.innerText = '25'
+                    scoreArray.push(25)
+                    turnNumber++
+                }
+                else {
+                    event.target.innerText = '0'
+                    scoreArray.push(0)
+                    turnNumber++
+                }
+                break;
+            case '4-kind':
+                if (checkFor4Kind) {
+                    event.target.innerText = sumOfAllDice()
+                    scoreArray.push(sumOfAllDice())
+                    turnNumber++
+                }
+                else {
+                    event.target.innerText = '0'
+                    scoreArray.push(0)
+                    turnNumber++
+                }
+                break;
+            case '3-kind':
+                if (checkFor3Kind) {
+                    event.target.innerText = sumOfAllDice()
+                    scoreArray.push(sumOfAllDice())
+                    turnNumber++
+                }
+                else {
+                    event.target.innerText = '0'
+                    scoreArray.push(0)
+                    turnNumber++
+                }
+                break;
+            case 'sixes':
+                event.target.innerText = checkForBasics(6)
+                scoreArray.push((checkForBasics(6)))
+                turnNumber++
+                break;
+            case 'fives':
+                event.target.innerText = checkForBasics(5)
+                scoreArray.push(checkForBasics(5))
+                turnNumber++
+                break;
+
+            case 'fours':
+                event.target.innerText = checkForBasics(4)
+                scoreArray.push(checkForBasics(4))
+                turnNumber++
+                break;
+            case 'threes':
+                event.target.innerText = checkForBasics(3)
+                scoreArray.push(checkForBasics(3))
+                turnNumber++
+                break;
+            case 'twos':
+                event.target.innerText = checkForBasics(2)
+                scoreArray.push(checkForBasics(2))
+                turnNumber++
+                break;
+            case 'aces':
+                event.target.innerText = checkForBasics(1)
+                scoreArray.push(checkForBasics(1))
+                turnNumber++
+                break;
+        }
+    }
+
+}
+const displayTotals = (arr) => {
+    let totalSum = arr.reduce((acc, n) => {
+        return acc + n
+    }, 0)
+
+}
+
 const render = () => {
+    checkCurrentPlayer()
+    displayCurrentPlayer()
+    displayTotals(player1Score)
+    displayTotals(player2Score)
     assignDice()
     lockedDiceSort()
     checkForYahtzee()
@@ -187,13 +361,17 @@ const render = () => {
     checkForFullHouse()
     checkFor4Kind()
     checkFor3Kind()
-    // checkForBasics()
+    checkForBasics()
+    console.log(player1Score)
+    console.log(player2Score)
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)
 diceEls.addEventListener('click', handleDiceClick)
+player1ScoreEl.addEventListener('click', handlePlayerScoreClick)
+player2ScoreEl.addEventListener('click', handlePlayerScoreClick)
 
 
 
