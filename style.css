@@ -19,24 +19,25 @@ h3 {
   /* height: fit-content; */
   /* border: 1px solid red; */
   width: fit-content;
+
   justify-content: center;
   align-items: baseline;
-  line-height: 20px;
+  line-height: 40px;
   border: 1px solid black;
   text-align: center;
 }
 
 .player1-score,
 .player2-score,
-.categories {
+.categories,
+.scoring-rules {
   width: 100px;
   text-align: center;
   border: 1px solid black;
-  line-height: 20px;
 }
 .player-header {
   border: 1px solid black;
-  line-height: 20px;
+  line-height: 40px;
 }
 
 .categories div {
@@ -47,9 +48,19 @@ h3 {
   cursor: pointer;
   border: 1px solid black;
 }
+.scoring-rules,
+.scoring-rules * {
+  border: 1px solid black;
+  line-height: 40px;
+}
 .player1-total,
 .player2-total {
   border: 1px solid black;
+  line-height: 40px;
+}
+.three-kind-rule,
+.four-kind-rule,
+.chance-rule {
   line-height: 20px;
 }
 .dice {
