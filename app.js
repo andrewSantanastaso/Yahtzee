@@ -1,8 +1,9 @@
 /*-------------------------------- Constants --------------------------------*/
 const MAX_TURN = 26
 const diceArray = [document.getElementById('1'), document.getElementById('2'), document.getElementById('3'), document.getElementById('4'), document.getElementById('5'), document.getElementById('6'),]
-const largeStraight = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
-const smallStraight = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
+
+const largeStraights = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
+const smallStraights = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
 const empty = '\u00A0'
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score = []
@@ -27,7 +28,7 @@ const player1TotalEl = document.querySelector('.player1-total')
 const player2TotalEl = document.querySelector('.player2-total')
 const scoreBoxEls = document.querySelectorAll('.score-box')
 const dieEls = document.querySelectorAll('.die')
-const diceEls = document.querySelector('.dice')
+const diceEl = document.querySelector('.dice')
 const btnEL = document.querySelector('button')
 
 
@@ -93,6 +94,7 @@ const randomNumGenerator = () => {
     return ((Math.floor(Math.random() * 6)) + 1)
 }
 const rollDice = () => {
+
     if (rollNumber > 2) {
         lockedDice = currentDice
         return
@@ -139,7 +141,7 @@ const handleDiceClick = (event) => {
 
 
 const assignDice = () => {
-    if (rollNumber > 0) {
+    if (rollNumber >= 0) {
         dieEls.forEach((die) => {
 
             if (die.classList.contains('unlocked')) {
@@ -173,24 +175,31 @@ const checkForChance = () => {
 
 }
 const checkForLargeStraight = () => {
-    if (orderedArray.toString() === largeStraight.toString() || orderedArray.toString() === largeStraight[1].toString()
+    if (orderedArray.toString() === largeStraights[0].toString() || orderedArray.toString() === largeStraights[1].toString()
     ) {
         return true
     }
 
 }
 const checkForSmallStraight = () => {
-    let orderedString = orderedArray.toString()
-    let smallStraightA = smallStraight[0].toString()
-    let smallStraightB = smallStraight[1].toString()
-    let smallStraightC = smallStraight[2].toString()
-    if (orderedString.includes(smallStraightA) || orderedString.includes(smallStraightB) || orderedString.includes(smallStraightC)) {
+    let orderedSet = [...new Set(orderedArray)]
+
+
+
+    console.log(orderedSet.toString())
+    console.log(`striaghtSet ${smallStraights[0].toString()}`)
+    console.log(`striaghtSet ${smallStraights[1].toString()}`)
+    console.log(`striaghtSet ${smallStraights[2].toString()}`)
+
+
+    if (orderedSet.toString().includes(smallStraights[0].toString()) || orderedSet.toString().includes(smallStraights[1].toString()) || orderedSet.toString().includes(smallStraights[2].toString())) {
+
+
         return true
     }
-    else {
-        return false
-    }
+
 }
+
 const checkForFullHouse = () => {
     if ((orderedArray[0] === orderedArray[1] && orderedArray[0] === orderedArray[2]) && (orderedArray[3] === orderedArray[4])) {
 
@@ -389,6 +398,21 @@ const declareWinner = () => {
     }
 
 }
+const spinAnimation = (event) => {
+    dieEls.forEach((die) => {
+        if (die.classList.contains('unlocked')) {
+            die.classList.add('spin')
+            setTimeout(() => {
+                die.classList.remove('spin')
+            }, 1500)
+
+
+
+        }
+
+    })
+
+}
 const render = () => {
     displayCurrentPlayer()
     assignDice()
@@ -411,7 +435,8 @@ const render = () => {
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)
-diceEls.addEventListener('click', handleDiceClick)
+btnEL.addEventListener('click', spinAnimation)
+diceEl.addEventListener('click', handleDiceClick)
 document.querySelectorAll('.score-box').forEach(box => {
     box, addEventListener('click', handlePlayerScoreClick)
 })
