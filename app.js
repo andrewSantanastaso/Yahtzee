@@ -16,14 +16,15 @@ let player2Turn = false
 let dieUnlocked = true
 let rollNumber = 0
 let currentPlayer
+let winner
 
 /*------------------------ Cached Element References ------------------------*/
 const currentPlayerEl = document.querySelector('.current-player')
 const scoreCardEl = document.querySelector('.score-card')
 const player1ScoreEl = document.querySelector('.player1-score')
 const player2ScoreEl = document.querySelector('.player2-score')
-const player1TotalEl = document.querySelector('player1-total')
-const player2TotalEl = document.querySelector('player2-total')
+const player1TotalEl = document.querySelector('.player1-total')
+const player2TotalEl = document.querySelector('.player2-total')
 const scoreBoxEls = document.querySelectorAll('.score-box')
 const dieEls = document.querySelectorAll('.die')
 const diceEls = document.querySelector('.dice')
@@ -35,7 +36,8 @@ const init = () => {
     player1Score = []
     player2Score = []
     turnNumber = 1
-    currentDice = Array(5).fill('')
+
+    currentDice = Array(5).fill(randomNumGenerator())
     dieEls.forEach((die) => {
         die.classList.add('unlocked')
     })
@@ -46,23 +48,44 @@ const init = () => {
     render()
 
 }
-const checkCurrentPlayer = () => {
-    if (turnNumber % 2 === 0) {
+
+const displayCurrentPlayer = () => {
+    if (player1Turn) {
+        currentPlayer = 'Player 1'
+    }
+    else {
+        currentPlayer = 'Player 2'
+    }
+    if (rollNumber === 0) {
+        currentPlayerEl.innerText = `${currentPlayer}\'s Turn`
+    }
+    else {
+        currentPlayerEl.innerText = `${currentPlayer}\'s Turn. Roll Number: ${rollNumber}`
+    }
+}
+
+
+const switchPlayer = () => {
+    if (player1Turn) {
         player2Turn = true
         player1Turn = false
+
     }
     else {
         player1Turn = true
         player2Turn = false
-    }
-}
-const displayCurrentPlayer = () => {
-    if (player1Turn) {
-        currentPlayerEl.innerText = 'Player 1\'s turn'
-    }
-    else { currentPlayerEl.innerText = 'Player 2\'s turn' }
 
+    }
+    turnNumber++
+    rollNumber = 0
+    dieEls.forEach((die) => {
+        die.classList.replace('locked', 'unlocked')
+    })
+    render()
 }
+
+
+
 
 // --------- DICE LOGIC -----------//
 const randomNumGenerator = () => {
@@ -70,25 +93,27 @@ const randomNumGenerator = () => {
     return ((Math.floor(Math.random() * 6)) + 1)
 }
 const rollDice = () => {
-    if (rollNumber > 3) {
+    if (rollNumber > 2) {
         lockedDice = currentDice
-        console.log(lockedDiceSort())
         return
     }
     for (let i = 0; i < currentDice.length; i++) {
         if (diceArray[i].classList.contains('unlocked')) {
 
             currentDice[i] = randomNumGenerator()
+
         }
 
         else {
             currentDice[i] = currentDice[i]
+
         }
     }
+    rollNumber++
     orderedArray = currentDice.toSorted()
+
     render()
-    console.log(currentDice)
-    console.log(orderedArray)
+
 
 }
 
@@ -99,13 +124,13 @@ const handleDiceClick = (event) => {
     }
     if (dieUnlocked) {
 
-        event.target.classList.add('locked')
-        event.target.classList.remove('unlocked')
+        event.target.classList.replace('locked', 'unlocked')
+
         dieUnlocked = false
     }
     else {
-        event.target.classList.add('unlocked')
-        event.target.classList.remove('locked')
+        event.target.classList.replace('unlocked', 'locked')
+
         lockedDice.push(currentDice[event.target.id - 1])
         dieUnlocked = true
     }
@@ -114,18 +139,19 @@ const handleDiceClick = (event) => {
 
 
 const assignDice = () => {
+    if (rollNumber > 0) {
+        dieEls.forEach((die) => {
 
-    dieEls.forEach((die) => {
-
-        if (die.classList.contains('unlocked')) {
-            die.classList.remove(die.classList[2])
-        }
-
-
-        die.classList.add(`face-${currentDice[die.id - 1]}`)
+            if (die.classList.contains('unlocked')) {
+                die.classList.remove(die.classList[2])
+            }
 
 
-    })
+            die.classList.add(`face-${currentDice[die.id - 1]}`)
+
+
+        })
+    }
 }
 const lockedDiceSort = () => {
     return lockedDice.sort()
@@ -150,8 +176,6 @@ const checkForLargeStraight = () => {
     if (orderedArray.toString() === largeStraight.toString() || orderedArray.toString() === largeStraight[1].toString()
     ) {
         return true
-    } else {
-        return false
     }
 
 }
@@ -166,9 +190,8 @@ const checkForSmallStraight = () => {
     else {
         return false
     }
-
 }
-checkForFullHouse = () => {
+const checkForFullHouse = () => {
     if ((orderedArray[0] === orderedArray[1] && orderedArray[0] === orderedArray[2]) && (orderedArray[3] === orderedArray[4])) {
 
         return true
@@ -181,13 +204,11 @@ checkForFullHouse = () => {
 }
 const checkFor4Kind = () => {
     if (orderedArray[0] === orderedArray[3] || orderedArray[1] === orderedArray[4]) {
-
         return true
     }
 }
 const checkFor3Kind = () => {
     if (orderedArray[0] === orderedArray[2] || orderedArray[1] === orderedArray[3] || orderedArray[2] === orderedArray[4]) {
-
         return true
     }
 }
@@ -197,9 +218,7 @@ const checkForBasics = (n) => {
         if (x === n) {
             output += x
         }
-
     }
-    console.log(output)
     return output
 }
 //-------SCORING LOGIC--------//
@@ -222,136 +241,144 @@ const handlePlayerScoreClick = (event) => {
 
 
         if (event.target.innerText !== empty) {
-
             return
         }
-
+        console.log(`Handling click for: ${scoreBoxName}`)
         switch (scoreBoxName) {
             case 'chance':
 
                 event.target.innerText = sumOfAllDice()
                 scoreArray.push(sumOfAllDice())
-                turnNumber++
+                switchPlayer()
                 break;
             case 'yahtzee':
                 if (checkForYahtzee()) {
                     event.target.innerText = '50'
                     scoreArray.push(50)
-                    turnNumber++
+
                 }
                 else {
                     event.target.innerText = '0'
                     scoreArray.push(0)
-                    turnNumber++
+
                 }
+                switchPlayer()
                 break;
-            case 'larger-straight':
+            case 'large-straight':
                 if (checkForLargeStraight()) {
                     event.target.innerText = '40'
                     scoreArray.push(40)
-                    turnNumber++
+
                 }
                 else {
                     event.target.innerText = '0'
                     scoreArray.push(0)
-                    turnNumber++
+
                 }
+                switchPlayer()
                 break;
             case 'small-straight':
-                if (checkForSmallStraight) {
+                if (checkForSmallStraight()) {
                     event.target.innerText = '30'
                     scoreArray.push(30)
-                    turnNumber++
+
                 }
                 else {
                     event.target.innerText = '0'
                     scoreArray.push(0)
-                    turnNumber++
+
                 }
+                switchPlayer()
                 break;
             case 'full-house':
-                if (checkForFullHouse) {
+                if (checkForFullHouse()) {
                     event.target.innerText = '25'
                     scoreArray.push(25)
-                    turnNumber++
+
                 }
                 else {
                     event.target.innerText = '0'
                     scoreArray.push(0)
-                    turnNumber++
+
                 }
+                switchPlayer()
                 break;
             case '4-kind':
-                if (checkFor4Kind) {
+                if (checkFor4Kind()) {
                     event.target.innerText = sumOfAllDice()
                     scoreArray.push(sumOfAllDice())
-                    turnNumber++
+
                 }
                 else {
                     event.target.innerText = '0'
                     scoreArray.push(0)
-                    turnNumber++
+
                 }
+                switchPlayer()
                 break;
             case '3-kind':
-                if (checkFor3Kind) {
+                if (checkFor3Kind()) {
                     event.target.innerText = sumOfAllDice()
                     scoreArray.push(sumOfAllDice())
-                    turnNumber++
+
                 }
                 else {
                     event.target.innerText = '0'
                     scoreArray.push(0)
-                    turnNumber++
+
                 }
+                switchPlayer()
                 break;
             case 'sixes':
                 event.target.innerText = checkForBasics(6)
                 scoreArray.push((checkForBasics(6)))
-                turnNumber++
+                switchPlayer()
                 break;
             case 'fives':
                 event.target.innerText = checkForBasics(5)
                 scoreArray.push(checkForBasics(5))
-                turnNumber++
+                switchPlayer()
                 break;
 
             case 'fours':
                 event.target.innerText = checkForBasics(4)
                 scoreArray.push(checkForBasics(4))
-                turnNumber++
+                switchPlayer()
                 break;
             case 'threes':
                 event.target.innerText = checkForBasics(3)
                 scoreArray.push(checkForBasics(3))
-                turnNumber++
+                switchPlayer()
                 break;
             case 'twos':
                 event.target.innerText = checkForBasics(2)
                 scoreArray.push(checkForBasics(2))
-                turnNumber++
+                switchPlayer()
                 break;
             case 'aces':
                 event.target.innerText = checkForBasics(1)
                 scoreArray.push(checkForBasics(1))
-                turnNumber++
+                switchPlayer()
                 break;
         }
+
     }
 
 }
 const displayTotals = (arr) => {
-    let totalSum = arr.reduce((acc, n) => {
+    let totalSum = arr.reduce((acc, n, i) => {
         return acc + n
     }, 0)
-
+    return totalSum
 }
 
+const declareWinner = () => {
+    if (turnNumber > MAX_TURN) {
+        currentPlayerEl.innerText = 'Winner!'
+    }
+}
 const render = () => {
-    checkCurrentPlayer()
     displayCurrentPlayer()
-    displayTotals(player1Score)
-    displayTotals(player2Score)
     assignDice()
     lockedDiceSort()
     checkForYahtzee()
@@ -362,16 +389,18 @@ const render = () => {
     checkFor4Kind()
     checkFor3Kind()
     checkForBasics()
-    console.log(player1Score)
-    console.log(player2Score)
+    declareWinner()
+
+    player1TotalEl.innerText = displayTotals(player1Score)
+    player2TotalEl.innerText = displayTotals(player2Score)
+    console.log(turnNumber)
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
 btnEL.addEventListener('click', rollDice)
 diceEls.addEventListener('click', handleDiceClick)
-player1ScoreEl.addEventListener('click', handlePlayerScoreClick)
-player2ScoreEl.addEventListener('click', handlePlayerScoreClick)
-
-
+document.querySelectorAll('.score-box').forEach(box => {
+    box, addEventListener('click', handlePlayerScoreClick)
+})
 
