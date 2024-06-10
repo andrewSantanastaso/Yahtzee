@@ -243,7 +243,7 @@ const handlePlayerScoreClick = (event) => {
         if (event.target.innerText !== empty) {
             return
         }
-        console.log(`Handling click for: ${scoreBoxName}`)
+
         switch (scoreBoxName) {
             case 'chance':
 
@@ -373,9 +373,21 @@ const displayTotals = (arr) => {
 }
 
 const declareWinner = () => {
+    let player1FinalScore = parseInt(player1TotalEl.innerText)
+    let player2FinalScore = parseInt(player2TotalEl.innerText)
     if (turnNumber > MAX_TURN) {
-        currentPlayerEl.innerText = 'Winner!'
+        if (player1FinalScore > player2FinalScore) {
+            winner = 'Player 1'
+        }
+        else if (player1FinalScore < player2FinalScore) {
+            winner = 'Player 2'
+        }
+        else {
+            winner = "Neither person! It's a tie"
+        }
+        currentPlayerEl.innerText = `The winner is ${winner}!`
     }
+
 }
 const render = () => {
     displayCurrentPlayer()
@@ -393,7 +405,7 @@ const render = () => {
 
     player1TotalEl.innerText = displayTotals(player1Score)
     player2TotalEl.innerText = displayTotals(player2Score)
-    console.log(turnNumber)
+
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
