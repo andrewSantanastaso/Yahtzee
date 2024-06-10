@@ -186,10 +186,6 @@ const checkForSmallStraight = () => {
 
 
 
-    console.log(orderedSet.toString())
-    console.log(`striaghtSet ${smallStraights[0].toString()}`)
-    console.log(`striaghtSet ${smallStraights[1].toString()}`)
-    console.log(`striaghtSet ${smallStraights[2].toString()}`)
 
 
     if (orderedSet.toString().includes(smallStraights[0].toString()) || orderedSet.toString().includes(smallStraights[1].toString()) || orderedSet.toString().includes(smallStraights[2].toString())) {
@@ -398,21 +394,21 @@ const declareWinner = () => {
     }
 
 }
+
 const spinAnimation = (event) => {
+
     dieEls.forEach((die) => {
+
         if (die.classList.contains('unlocked')) {
             die.classList.add('spin')
             setTimeout(() => {
                 die.classList.remove('spin')
             }, 1500)
-
-
-
         }
-
     })
-
 }
+
+
 const render = () => {
     displayCurrentPlayer()
     assignDice()
