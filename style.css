@@ -115,7 +115,7 @@ button:hover {
   background-color: goldenrod;
   color: #7a1400;
 }
-@media (max-width: 1580px) {
+@media (max-width: 1600px) {
   .score-card {
     width: 800px;
   }
@@ -130,20 +130,32 @@ button:hover {
   }
 }
 
-@media (max-width: 1340px) {
+@media (max-width: 1600px) {
   .score-card {
-    width: 600px;
+    width: 800px;
   }
   .player1-score,
   .player2-score,
   .categories,
   .scoring-rules {
-    width: 150px;
+    width: 200px;
     text-align: center;
     border: 1px solid black;
+    line-height: 40px;
   }
+  .three-kind-rule,
+  .four-kind-rule,
+  .chance-rule {
+    font-size: 20px;
+  }
+
   .dice {
     width: 450px;
+    height: 400px;
+    gap: 5px;
+  }
+  button {
+    transform: translateY(-150px) translateX(-150px);
   }
 }
 @media (max-width: 1300px) {
