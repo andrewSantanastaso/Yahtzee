@@ -1,4 +1,4 @@
-![yahtzee logo](images/Black and White Modern Entertainment Logo (3).png)
+![yahtzee app](images/Screenshot 2024-06-10 at 9.31.10 PM.png)
 
 # Yahtzee
 
@@ -13,7 +13,7 @@ Originally created in 1956 by Milton Bradley, this dice game gets its roots from
 - If a player chooses a category for which they do not have, the score for that category is 0.
 - The game ends after the 13th round, scores are calculated and highest score wins
 
-### Ways to Score
+## Ways to Score
 
 - Basic Values
   - Aces - Sum all the 1's
@@ -37,13 +37,13 @@ Originally created in 1956 by Milton Bradley, this dice game gets its roots from
 - Chance
   - Sum all dice on the board
 
-#### Technologies
+## Technologies
 
 - HTML
 - CSS
 - Javascript
 
-##### Attributions
+## Attributions
 
-[Yahztee Score Card][Inspiration]
-[Inspiration]: https://www.eecis.udel.edu/~davis/yahtzee.pdf
+Yahztee-Score-Card Inspiration:
+https://www.eecis.udel.edu/~davis/yahtzee.pdf
