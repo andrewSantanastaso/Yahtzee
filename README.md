@@ -1,8 +1,11 @@
-![yahtzee app](images/Screenshot 2024-06-10 at 9.31.10 PM.png)
+<img src='images/Black and White Modern Entertainment Logo (3).png' alt='Yahtzee Logo'/>
 
 # Yahtzee
 
-Originally created in 1956 by Milton Bradley, this dice game gets its roots from other games such as Poker, Yacht, and Generala.
+Originally created in 1956 by Milton Bradley, this dice game gets its roots from other games such as Poker, Yacht, and Generala.I chose to re-create this game becuase it seemed challenging yet comprehendable, I was quickly able to list out the parts of the game that I needed to make and figure out
+
+Link to my planning document:
+https://generalassembly.instructure.com/courses/296/assignments/3624
 
 ## Rules
 
@@ -47,3 +50,21 @@ Originally created in 1956 by Milton Bradley, this dice game gets its roots from
 
 Yahztee-Score-Card Inspiration:
 https://www.eecis.udel.edu/~davis/yahtzee.pdf
+
+Logo Created by Nicole Riccio (my wife <3)
+
+Links I used for reference:
+
+https://stackoverflow.com/questions/1495822/replacing-nbsp-from-javascript-dom-text-node
+
+https://developer.mozilla.org/en-US/docs/Web/API/Node/parentNode
+
+https://www.w3schools.com/jsref/met_win_settimeout.asp
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSorted#comparefn
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+
+Dice Faces:
+
+https://game-icons.net/1x1/delapouite/dice-six-faces-five.html
