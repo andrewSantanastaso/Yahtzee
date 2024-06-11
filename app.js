@@ -5,7 +5,7 @@ const diceArray = [document.getElementById('1'), document.getElementById('2'), d
 const largeStraights = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
 const smallStraights = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
 const empty = '\u00A0'
-
+const diceRollingAudio = new Audio("audio/dice-rolling - 6_11_24, 9.46 AM.m4a")
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score = []
 let player2Score = []
@@ -101,6 +101,8 @@ const rollDice = () => {
     if (rollNumber > 2) {
         return
     }
+    diceRollingAudio.volume = 0.75
+    diceRollingAudio.play()
     for (let i = 0; i < currentDice.length; i++) {
         if (diceArray[i].classList.contains('unlocked')) {
 
