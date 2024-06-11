@@ -356,7 +356,7 @@ const handlePlayerScoreClick = (event) => {
 
     }
 
-
+    checkForWinner()
 }
 const displayTotals = (arr) => {
     let totalSum = arr.reduce((acc, n, i) => {
@@ -365,7 +365,7 @@ const displayTotals = (arr) => {
     return totalSum
 }
 
-const declareWinner = () => {
+const checkForWinner = () => {
     let player1FinalScore = parseInt(player1TotalEl.innerText)
     let player2FinalScore = parseInt(player2TotalEl.innerText)
     if (turnNumber > MAX_TURN) {
@@ -380,7 +380,7 @@ const declareWinner = () => {
         }
         currentPlayerEl.innerText = `The winner is ${winner}!`
     }
-
+    // render()
 }
 
 const spinAnimation = () => {
@@ -412,7 +412,7 @@ const render = () => {
     checkFor4Kind()
     checkFor3Kind()
     checkForBasics()
-    declareWinner()
+
     player1TotalEl.innerText = displayTotals(player1Score)
     player2TotalEl.innerText = displayTotals(player2Score)
 
