@@ -5,19 +5,20 @@ const diceArray = [document.getElementById('1'), document.getElementById('2'), d
 const largeStraights = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
 const smallStraights = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
 const empty = '\u00A0'
+
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score = []
 let player2Score = []
 let turnNumber
 let currentDice = []
-let lockedDice = []
 let orderedArray = []
 let player1Turn = false
 let player2Turn = false
 let dieUnlocked = true
-let rollNumber = 0
+let rollNumber
 let currentPlayer
 let winner
+let spinAnimationDone = false
 
 /*------------------------ Cached Element References ------------------------*/
 const currentPlayerEl = document.querySelector('.current-player')
@@ -37,7 +38,6 @@ const init = () => {
     player1Score = []
     player2Score = []
     turnNumber = 1
-
     currentDice = Array(5).fill(randomNumGenerator())
     dieEls.forEach((die) => {
         die.classList.add('unlocked')
@@ -46,6 +46,8 @@ const init = () => {
         scorebox.innerText = empty
     })
     player1Turn = true
+    rollNumber = 0
+
     render()
 
 }
@@ -82,7 +84,8 @@ const switchPlayer = () => {
     dieEls.forEach((die) => {
         die.classList.replace('locked', 'unlocked')
     })
-    render()
+    spinAnimationDone = false
+
 }
 
 
@@ -96,7 +99,6 @@ const randomNumGenerator = () => {
 const rollDice = () => {
 
     if (rollNumber > 2) {
-        lockedDice = currentDice
         return
     }
     for (let i = 0; i < currentDice.length; i++) {
@@ -106,10 +108,7 @@ const rollDice = () => {
 
         }
 
-        else {
-            currentDice[i] = currentDice[i]
 
-        }
     }
     rollNumber++
     orderedArray = currentDice.toSorted()
@@ -121,7 +120,7 @@ const rollDice = () => {
 
 const handleDiceClick = (event) => {
 
-    if (event.target.classList.contains('dice')) {
+    if (event.target.classList.contains(!'die')) {
         return
     }
     if (dieUnlocked) {
@@ -133,7 +132,7 @@ const handleDiceClick = (event) => {
     else {
         event.target.classList.replace('unlocked', 'locked')
 
-        lockedDice.push(currentDice[event.target.id - 1])
+
         dieUnlocked = true
     }
 
@@ -150,24 +149,17 @@ const assignDice = () => {
 
 
             die.classList.add(`face-${currentDice[die.id - 1]}`)
-
-
         })
     }
-}
-const lockedDiceSort = () => {
-    return lockedDice.sort()
 }
 const sumOfAllDice = () => (currentDice.reduce((acc, n, i) => {
     return acc + n
 }, 0))
 
 const checkForYahtzee = () => {
-    const yahtzee = currentDice.every((elem) => {
-
-        return elem === currentDice[0]
+    currentDice.every(die => {
+        die === currentDice[0]
     })
-    return yahtzee
 }
 const checkForChance = () => {
     sumOfAllDice()
@@ -184,12 +176,7 @@ const checkForLargeStraight = () => {
 const checkForSmallStraight = () => {
     let orderedSet = [...new Set(orderedArray)]
 
-
-
-
-
     if (orderedSet.toString().includes(smallStraights[0].toString()) || orderedSet.toString().includes(smallStraights[1].toString()) || orderedSet.toString().includes(smallStraights[2].toString())) {
-
 
         return true
     }
@@ -369,6 +356,7 @@ const handlePlayerScoreClick = (event) => {
 
     }
 
+
 }
 const displayTotals = (arr) => {
     let totalSum = arr.reduce((acc, n, i) => {
@@ -395,24 +383,27 @@ const declareWinner = () => {
 
 }
 
-const spinAnimation = (event) => {
+const spinAnimation = () => {
+    if (rollNumber <= 3 && !spinAnimationDone) {
 
-    dieEls.forEach((die) => {
-
-        if (die.classList.contains('unlocked')) {
-            die.classList.add('spin')
-            setTimeout(() => {
-                die.classList.remove('spin')
-            }, 1500)
+        dieEls.forEach(die => {
+            if (die.classList.contains('unlocked')) {
+                die.classList.add('spin');
+                setTimeout(() => die.classList.remove('spin'), 1500);
+            }
+        });
+        if (rollNumber === 3) {
+            spinAnimationDone = true
         }
-    })
+
+
+    }
 }
 
 
 const render = () => {
     displayCurrentPlayer()
     assignDice()
-    lockedDiceSort()
     checkForYahtzee()
     checkForChance()
     checkForLargeStraight()
@@ -422,7 +413,6 @@ const render = () => {
     checkFor3Kind()
     checkForBasics()
     declareWinner()
-
     player1TotalEl.innerText = displayTotals(player1Score)
     player2TotalEl.innerText = displayTotals(player2Score)
 
@@ -434,6 +424,6 @@ btnEL.addEventListener('click', rollDice)
 btnEL.addEventListener('click', spinAnimation)
 diceEl.addEventListener('click', handleDiceClick)
 document.querySelectorAll('.score-box').forEach(box => {
-    box, addEventListener('click', handlePlayerScoreClick)
+    box.addEventListener('click', handlePlayerScoreClick)
 })
 
