@@ -8,6 +8,8 @@ const empty = '\u00A0'
 const diceRollingAudio = new Audio("audio/dice-rolling - 6_11_24, 9.46 AM.m4a")
 const writingAudio = new Audio("audio/233555-Parched-drawing-rough-paper-canvas-chalk-stroke-scribble-short-V-alt.wav")
 const notValidChoiceAudio = new Audio("audio/NotValid.m4a")
+const lockAudio = new Audio('audio/lock.m4a')
+const unlockAudio = new Audio('audio/unlock.m4a')
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score = []
 let player2Score = []
@@ -129,17 +131,19 @@ const rollDice = () => {
 
 const handleDiceClick = (event) => {
 
-    if (event.target.classList.contains(!'die')) {
-        return
-    }
+
     if (dieUnlocked) {
 
         event.target.classList.replace('locked', 'unlocked')
 
+
         dieUnlocked = false
+
     }
     else {
+
         event.target.classList.replace('unlocked', 'locked')
+
 
 
         dieUnlocked = true
@@ -165,11 +169,12 @@ const sumOfAllDice = () => (currentDice.reduce((acc, n, i) => {
     return acc + n
 }, 0))
 
-const checkForYahtzee = () => {
+const checkForYahtzee = () => (
+
     currentDice.every(die => {
-        die === currentDice[0]
+        return die === currentDice[0]
     })
-}
+)
 const checkForChance = () => {
     sumOfAllDice()
 

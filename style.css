@@ -60,10 +60,7 @@ h3 {
   font-family: "Gloria Hallelujah", sans-serif;
   font-weight: lighter;
 }
-/* .score-box:hover {
-  background-color: goldenrod;
-  color: black;
-} */
+
 .scoring-rules div {
   border: 1px solid black;
   height: 40px;
@@ -98,6 +95,9 @@ h3 {
 .die:hover.unlocked {
   filter: invert();
   box-shadow: none;
+}
+.die:hover.spin {
+  filter: brightness(10%) blur(15px);
 }
 button {
   font-size: 40px;
