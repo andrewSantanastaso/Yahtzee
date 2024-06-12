@@ -6,6 +6,8 @@ const largeStraights = [[1, 2, 3, 4, 5], [2, 3, 4, 5, 6]]
 const smallStraights = [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]]
 const empty = '\u00A0'
 const diceRollingAudio = new Audio("audio/dice-rolling - 6_11_24, 9.46 AM.m4a")
+const writingAudio = new Audio("audio/233555-Parched-drawing-rough-paper-canvas-chalk-stroke-scribble-short-V-alt.wav")
+const notValidChoiceAudio = new Audio("audio/NotValid.m4a")
 /*---------------------------- Variables (state) ----------------------------*/
 let player1Score = []
 let player2Score = []
@@ -36,6 +38,8 @@ const btnEL = document.querySelector('button')
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
     player1Score = []
+    player1TotalEl.innerText = 0
+    player2TotalEl.innerText = 0
     player2Score = []
     turnNumber = 1
     currentDice = Array(5).fill(randomNumGenerator())
@@ -235,9 +239,10 @@ const handlePlayerScoreClick = (event) => {
 
 
         if (event.target.innerText !== empty) {
+            notValidChoiceAudio.play()
             return
         }
-
+        writingAudio.play()
         switch (scoreBoxName) {
             case 'chance':
 
@@ -358,6 +363,9 @@ const handlePlayerScoreClick = (event) => {
 
     }
 
+    player1TotalEl.innerText = displayTotals(player1Score)
+    player2TotalEl.innerText = displayTotals(player2Score)
+
     checkForWinner()
 }
 const displayTotals = (arr) => {
@@ -382,7 +390,7 @@ const checkForWinner = () => {
         }
         currentPlayerEl.innerText = `The winner is ${winner}!`
     }
-    // render()
+
 }
 
 const spinAnimation = () => {
@@ -415,8 +423,6 @@ const render = () => {
     checkFor3Kind()
     checkForBasics()
 
-    player1TotalEl.innerText = displayTotals(player1Score)
-    player2TotalEl.innerText = displayTotals(player2Score)
 
 }
 

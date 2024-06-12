@@ -58,16 +58,15 @@ h3 {
   cursor: pointer;
   border: 1px solid black;
   font-family: "Gloria Hallelujah", sans-serif;
+  font-weight: lighter;
 }
 .score-box:hover {
   background-color: goldenrod;
   color: black;
 }
 .scoring-rules div {
-  /* .scoring-rules div { */
   border: 1px solid black;
   height: 40px;
-  /* line-height: 40px; */
 }
 .player1-total,
 .player2-total {
