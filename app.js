@@ -246,12 +246,13 @@ const handlePlayerScoreClick = (event) => {
             return
         }
         writingAudio.play()
+        switchPlayer()
         switch (scoreBoxName) {
             case 'chance':
 
                 event.target.innerText = sumOfAllDice()
                 scoreArray.push(sumOfAllDice())
-                switchPlayer()
+
                 break;
             case 'yahtzee':
                 if (checkForYahtzee()) {
@@ -261,10 +262,10 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-                    scoreArray.push(0)
+
 
                 }
-                switchPlayer()
+
                 break;
             case 'large-straight':
                 if (checkForLargeStraight()) {
@@ -274,10 +275,10 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-                    scoreArray.push(0)
+
 
                 }
-                switchPlayer()
+
                 break;
             case 'small-straight':
                 if (checkForSmallStraight()) {
@@ -287,10 +288,10 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-                    scoreArray.push(0)
+
 
                 }
-                switchPlayer()
+
                 break;
             case 'full-house':
                 if (checkForFullHouse()) {
@@ -300,10 +301,10 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-                    scoreArray.push(0)
+
 
                 }
-                switchPlayer()
+
                 break;
             case '4-kind':
                 if (checkFor4Kind()) {
@@ -313,10 +314,10 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-                    scoreArray.push(0)
+
 
                 }
-                switchPlayer()
+
                 break;
             case '3-kind':
                 if (checkFor3Kind()) {
@@ -326,50 +327,49 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-                    scoreArray.push(0)
+
 
                 }
-                switchPlayer()
+
                 break;
             case 'sixes':
                 event.target.innerText = checkForBasics(6)
                 scoreArray.push((checkForBasics(6)))
-                switchPlayer()
+
                 break;
             case 'fives':
                 event.target.innerText = checkForBasics(5)
                 scoreArray.push(checkForBasics(5))
-                switchPlayer()
+
                 break;
 
             case 'fours':
                 event.target.innerText = checkForBasics(4)
                 scoreArray.push(checkForBasics(4))
-                switchPlayer()
+
                 break;
             case 'threes':
                 event.target.innerText = checkForBasics(3)
                 scoreArray.push(checkForBasics(3))
-                switchPlayer()
+
                 break;
             case 'twos':
                 event.target.innerText = checkForBasics(2)
                 scoreArray.push(checkForBasics(2))
-                switchPlayer()
+
                 break;
             case 'aces':
                 event.target.innerText = checkForBasics(1)
                 scoreArray.push(checkForBasics(1))
-                switchPlayer()
+
                 break;
         }
 
     }
-
     player1TotalEl.innerText = displayTotals(player1Score)
     player2TotalEl.innerText = displayTotals(player2Score)
-
     checkForWinner()
+    render()
 }
 const displayTotals = (arr) => {
     let totalSum = arr.reduce((acc, n, i) => {
@@ -438,6 +438,7 @@ const render = () => {
 
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
+
 btnEL.addEventListener('click', () => {
     rollDice()
     spinAnimation()
