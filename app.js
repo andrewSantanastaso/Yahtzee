@@ -248,10 +248,6 @@ const handlePlayerScoreClick = (event) => {
 
     if (event.target.parentNode === player && rollNumber > 0) {
 
-        // if (event.target) {
-        //     notValidChoiceAudio.play()
-        //     return
-        // }
         event.target.style.color = 'white'
         writingAudio.play()
         switchPlayer()
