@@ -227,15 +227,18 @@ const checkForBasics = (n) => {
 const handlePlayerScoreClick = (event) => {
     let player
     let scoreArray
+    let playerTotal
     const scoreBoxName = event.target.id
 
     if (player1Turn) {
         player = player1ScoreEl
         scoreArray = player1Score
+        playerTotal = player1TotalEl
     }
     else {
         player = player2ScoreEl
         scoreArray = player2Score
+        playerTotal = player2TotalEl
     }
 
     if (event.target.parentNode === player && rollNumber > 0) {
@@ -310,14 +313,10 @@ const handlePlayerScoreClick = (event) => {
                 if (checkFor4Kind()) {
                     event.target.innerText = sumOfAllDice()
                     scoreArray.push(sumOfAllDice())
-
                 }
                 else {
                     event.target.innerText = '0'
-
-
                 }
-
                 break;
             case '3-kind':
                 if (checkFor3Kind()) {
@@ -327,47 +326,37 @@ const handlePlayerScoreClick = (event) => {
                 }
                 else {
                     event.target.innerText = '0'
-
-
                 }
-
                 break;
             case 'sixes':
                 event.target.innerText = checkForBasics(6)
                 scoreArray.push((checkForBasics(6)))
-
                 break;
             case 'fives':
                 event.target.innerText = checkForBasics(5)
                 scoreArray.push(checkForBasics(5))
-
                 break;
 
             case 'fours':
                 event.target.innerText = checkForBasics(4)
                 scoreArray.push(checkForBasics(4))
-
                 break;
             case 'threes':
                 event.target.innerText = checkForBasics(3)
                 scoreArray.push(checkForBasics(3))
-
                 break;
             case 'twos':
                 event.target.innerText = checkForBasics(2)
                 scoreArray.push(checkForBasics(2))
-
                 break;
             case 'aces':
                 event.target.innerText = checkForBasics(1)
                 scoreArray.push(checkForBasics(1))
-
                 break;
         }
-
     }
-    player1TotalEl.innerText = displayTotals(player1Score)
-    player2TotalEl.innerText = displayTotals(player2Score)
+
+    playerTotal.innerText = displayTotals(scoreArray)
     checkForWinner()
     render()
 }
