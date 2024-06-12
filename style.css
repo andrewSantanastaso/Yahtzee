@@ -114,20 +114,6 @@ button:hover {
   background-color: goldenrod;
   color: #7a1400;
 }
-@media (max-width: 1600px) {
-  .score-card {
-    width: 800px;
-  }
-
-  .player1-score,
-  .player2-score,
-  .categories,
-  .scoring-rules {
-    width: 200px;
-    text-align: center;
-    border: 1px solid black;
-  }
-}
 
 @media (max-width: 1600px) {
   .score-card {
@@ -189,7 +175,7 @@ button:hover {
 
 @keyframes spin {
   from {
-    transform: rotate(0deg, 20deg);
+    transform: rotate(0deg);
   }
   to {
     transform: rotate(1440deg);
