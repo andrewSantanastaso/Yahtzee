@@ -38,9 +38,9 @@ const btnEL = document.querySelector('button')
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
     player1Score = []
+    player2Score = []
     player1TotalEl.innerText = 0
     player2TotalEl.innerText = 0
-    player2Score = []
     turnNumber = 1
     currentDice = Array(5).fill(randomNumGenerator())
     dieEls.forEach((die) => {
@@ -243,13 +243,13 @@ const handlePlayerScoreClick = (event) => {
 
     if (event.target.parentNode === player && rollNumber > 0) {
 
-
         if (event.target.innerText !== empty) {
             notValidChoiceAudio.play()
             return
         }
         writingAudio.play()
         switchPlayer()
+
         switch (scoreBoxName) {
             case 'chance':
 
@@ -355,10 +355,17 @@ const handlePlayerScoreClick = (event) => {
                 break;
         }
     }
+    else {
+        notValidChoiceAudio.play()
+
+    }
 
     playerTotal.innerText = displayTotals(scoreArray)
     checkForWinner()
     render()
+
+
+
 }
 const displayTotals = (arr) => {
     let totalSum = arr.reduce((acc, n, i) => {
@@ -404,8 +411,6 @@ const spinAnimation = () => {
         if (rollNumber === 3) {
             spinAnimationDone = true
         }
-
-
     }
 }
 
