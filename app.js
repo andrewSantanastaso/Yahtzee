@@ -49,6 +49,9 @@ const init = () => {
     scoreBoxEls.forEach((scorebox) => {
         scorebox.innerText = empty
     })
+    btnEL.innerText = "Roll Dice"
+    btnEL.style.height = '80px'
+    winner = ''
     player1Turn = true
     rollNumber = 0
 
@@ -389,8 +392,15 @@ const checkForWinner = () => {
             winner = "Neither person! It's a tie"
         }
         currentPlayerEl.innerText = `The winner is ${winner}!`
+        btnEL.innerText = 'PLAY AGAIN?'
+        btnEL.style.height = '100px'
     }
 
+}
+const replayBtn = () => {
+    if (winner !== '') {
+        init()
+    }
 }
 
 const spinAnimation = () => {
@@ -428,8 +438,11 @@ const render = () => {
 
 /*----------------------------- Event Listeners -----------------------------*/
 window.addEventListener('load', init)
-btnEL.addEventListener('click', rollDice)
-btnEL.addEventListener('click', spinAnimation)
+btnEL.addEventListener('click', () => {
+    rollDice()
+    spinAnimation()
+    replayBtn()
+})
 diceEl.addEventListener('click', handleDiceClick)
 document.querySelectorAll('.score-box').forEach(box => {
     box.addEventListener('click', handlePlayerScoreClick)
