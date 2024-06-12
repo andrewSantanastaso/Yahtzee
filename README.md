@@ -68,3 +68,9 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 Dice Faces:
 
 https://game-icons.net/1x1/delapouite/dice-six-faces-five.html
+
+## Next Steps
+
+- Would like to add a winning animation
+- Better sound FX
+- Perhaps a score preview before clicking so user knows what that score would be
