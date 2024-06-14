@@ -131,7 +131,9 @@ const rollDice = () => {
 
 const handleDiceClick = (event) => {
 
-
+    if (rollNumber === 0) {
+        return
+    }
     if (dieUnlocked) {
 
         event.target.classList.replace('locked', 'unlocked')
