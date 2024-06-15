@@ -11,8 +11,8 @@ const notValidChoiceAudio = new Audio("audio/NotValid.m4a")
 const lockAudio = new Audio('audio/lock.m4a')
 const unlockAudio = new Audio('audio/unlock.m4a')
 /*---------------------------- Variables (state) ----------------------------*/
-let player1Score = []
-let player2Score = []
+let player1Scores = []
+let player2Scores = []
 let turnNumber
 let currentDice = []
 let orderedArray = []
@@ -39,8 +39,8 @@ const btnEL = document.querySelector('button')
 
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
-    player1Score = []
-    player2Score = []
+    player1Scores = []
+    player2Scores = []
     player1TotalEl.innerText = 0
     player2TotalEl.innerText = 0
     turnNumber = 1
@@ -239,14 +239,15 @@ const handlePlayerScoreClick = (event) => {
 
     if (player1Turn) {
         player = player1ScoreEl
-        scoreArray = player1Score
+        scoreArray = player1Scores
         playerTotal = player1TotalEl
     }
     else {
         player = player2ScoreEl
-        scoreArray = player2Score
+        scoreArray = player2Scores
         playerTotal = player2TotalEl
     }
+
 
     if (event.target.parentNode === player && rollNumber > 0) {
 
@@ -360,13 +361,14 @@ const handlePlayerScoreClick = (event) => {
         }
     }
     else {
+
         notValidChoiceAudio.play()
 
     }
 
     playerTotal.innerText = displayTotals(scoreArray)
     checkForWinner()
-    render()
+
 
 
 
@@ -377,6 +379,7 @@ const scorePreview = (event) => {
     let originalText = event.target.innerText
     const scoreBoxName = event.target.id
 
+    // returns background to previous color and value if user does not click
     event.target.addEventListener('mouseout', (event) => {
         if (originalText !== empty) {
             event.target.style.backgroundColor = null
@@ -390,21 +393,28 @@ const scorePreview = (event) => {
 
     })
     event.target.addEventListener('click', (event) => {
+
         originalText = event.target.innerText
 
 
+
     })
+
     if (player1Turn) {
         player = player1ScoreEl
+
 
     }
     else {
         player = player2ScoreEl
+
     }
 
     if (event.target.parentNode === player && rollNumber > 0) {
+
         event.target.style.color = 'black'
         event.target.style.backgroundColor = 'goldenrod'
+
         if (originalText === empty) {
             switch (scoreBoxName) {
                 case 'chance':
@@ -507,9 +517,10 @@ const scorePreview = (event) => {
         }
 
 
+
     }
 
-    render()
+
 }
 const displayTotals = (arr) => {
     let totalSum = arr.reduce((acc, n, i) => {
