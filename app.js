@@ -253,6 +253,7 @@ const handlePlayerScoreClick = (event) => {
 
         event.target.style.color = 'white'
         writingAudio.play()
+
         switchPlayer()
 
         switch (scoreBoxName) {
@@ -372,6 +373,7 @@ const handlePlayerScoreClick = (event) => {
 
 
 
+
 }
 
 const scorePreview = (event) => {
@@ -384,21 +386,25 @@ const scorePreview = (event) => {
         if (originalText !== empty) {
             event.target.style.backgroundColor = null
             event.target.style.color = 'white'
-
+            return
         }
         else {
             event.target.innerText = originalText
             event.target.style.backgroundColor = null
+            return
         }
 
     })
+
     event.target.addEventListener('click', (event) => {
 
         originalText = event.target.innerText
 
 
 
+
     })
+
 
     if (player1Turn) {
         player = player1ScoreEl
@@ -518,6 +524,7 @@ const scorePreview = (event) => {
 
 
 
+
     }
 
 
@@ -581,6 +588,7 @@ const render = () => {
     checkFor4Kind()
     checkFor3Kind()
     checkForBasics()
+    checkForWinner()
 
 
 }
