@@ -73,5 +73,4 @@ https://game-icons.net/1x1/delapouite/dice-six-faces-five.html
 
 - Would like to add a winning animation
 - Better sound FX
-- Perhaps a score preview before clicking so user knows what that score would be (completed)
-- Would like to reduce the scoreclick and preview into one function
+- Perhaps a score preview before clicking so user knows what that score would be
