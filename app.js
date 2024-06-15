@@ -255,6 +255,9 @@ const handlePlayerScoreClick = (event) => {
 
     if (event.target.parentNode === player && rollNumber > 0) {
 
+        if (event.target.innerText !== empty) {
+            return
+        }
         event.target.style.color = 'white'
         writingAudio.play()
 
@@ -262,9 +265,6 @@ const handlePlayerScoreClick = (event) => {
 
 
 
-        if (event.target.innerText !== empty) {
-            return
-        }
         switch (scoreBoxName) {
             case 'chance':
 
