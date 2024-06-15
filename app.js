@@ -231,7 +231,11 @@ const checkForBasics = (n) => {
 }
 //-------SCORING LOGIC--------//
 
+
 const handlePlayerScoreClick = (event) => {
+
+
+
     let player
     let scoreArray
     let playerTotal
@@ -256,6 +260,11 @@ const handlePlayerScoreClick = (event) => {
 
         switchPlayer()
 
+
+
+        if (event.target.innerText !== empty) {
+            return
+        }
         switch (scoreBoxName) {
             case 'chance':
 
@@ -360,15 +369,17 @@ const handlePlayerScoreClick = (event) => {
                 scoreArray.push(checkForBasics(1))
                 break;
         }
+        playerTotal.innerText = displayTotals(scoreArray)
     }
+
     else {
 
         notValidChoiceAudio.play()
-
+        return
     }
 
-    playerTotal.innerText = displayTotals(scoreArray)
-    checkForWinner()
+
+
 
 
 
@@ -376,159 +387,7 @@ const handlePlayerScoreClick = (event) => {
 
 }
 
-const scorePreview = (event) => {
-    let player
-    let originalText = event.target.innerText
-    const scoreBoxName = event.target.id
 
-    // returns background to previous color and value if user does not click
-    event.target.addEventListener('mouseout', (event) => {
-        if (originalText !== empty) {
-            event.target.style.backgroundColor = null
-            event.target.style.color = 'white'
-            return
-        }
-        else {
-            event.target.innerText = originalText
-            event.target.style.backgroundColor = null
-            return
-        }
-
-    })
-
-    event.target.addEventListener('click', (event) => {
-
-        originalText = event.target.innerText
-
-
-
-
-    })
-
-
-    if (player1Turn) {
-        player = player1ScoreEl
-
-
-    }
-    else {
-        player = player2ScoreEl
-
-    }
-
-    if (event.target.parentNode === player && rollNumber > 0) {
-
-        event.target.style.color = 'black'
-        event.target.style.backgroundColor = 'goldenrod'
-
-        if (originalText === empty) {
-            switch (scoreBoxName) {
-                case 'chance':
-                    event.target.innerText = sumOfAllDice()
-                    break
-                case 'yahtzee':
-                    if (checkForYahtzee()) {
-                        event.target.innerText = '50'
-                    }
-                    else {
-                        event.target.innerText = '0'
-                    }
-
-                    break;
-                case 'large-straight':
-                    if (checkForLargeStraight()) {
-                        event.target.innerText = '40'
-
-
-                    }
-                    else {
-                        event.target.innerText = '0'
-
-
-                    }
-
-                    break;
-                case 'small-straight':
-                    if (checkForSmallStraight()) {
-                        event.target.innerText = '30'
-
-
-                    }
-                    else {
-                        event.target.innerText = '0'
-
-
-                    }
-
-                    break;
-                case 'full-house':
-                    if (checkForFullHouse()) {
-                        event.target.innerText = '25'
-
-
-                    }
-                    else {
-                        event.target.innerText = '0'
-
-
-                    }
-
-                    break;
-                case '4-kind':
-                    if (checkFor4Kind()) {
-                        event.target.innerText = sumOfAllDice()
-
-                    }
-                    else {
-                        event.target.innerText = '0'
-                    }
-                    break;
-                case '3-kind':
-                    if (checkFor3Kind()) {
-                        event.target.innerText = sumOfAllDice()
-
-
-                    }
-                    else {
-                        event.target.innerText = '0'
-                    }
-                    break;
-                case 'sixes':
-                    event.target.innerText = checkForBasics(6)
-
-                    break;
-                case 'fives':
-                    event.target.innerText = checkForBasics(5)
-
-                    break;
-
-                case 'fours':
-                    event.target.innerText = checkForBasics(4)
-
-                    break;
-                case 'threes':
-                    event.target.innerText = checkForBasics(3)
-
-                    break;
-                case 'twos':
-                    event.target.innerText = checkForBasics(2)
-
-                    break;
-                case 'aces':
-                    event.target.innerText = checkForBasics(1)
-
-                    break;
-
-            }
-        }
-
-
-
-
-    }
-
-
-}
 const displayTotals = (arr) => {
     let totalSum = arr.reduce((acc, n, i) => {
         return acc + n
@@ -591,6 +450,7 @@ const render = () => {
     checkForWinner()
 
 
+
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
@@ -603,7 +463,6 @@ btnEL.addEventListener('click', () => {
 })
 diceEl.addEventListener('click', handleDiceClick)
 document.querySelectorAll('.score-box').forEach(box => {
-    box.addEventListener('mouseover', scorePreview)
     box.addEventListener('click', handlePlayerScoreClick)
 
 })
