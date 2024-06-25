@@ -102,8 +102,8 @@ h3 {
 button {
   font-size: 40px;
   margin-left: 1000px;
-  height: 80px;
-  width: 200px;
+  min-height: fit-content;
+  min-width: fit-content;
   border: 5px solid black;
   border-radius: 20px;
   font-weight: bolder;
